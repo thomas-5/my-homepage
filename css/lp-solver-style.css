@@ -1,0 +1,60 @@
+body {
+    margin: 5% 10% 5% 10%;
+    width: 80%;
+    height: 100vh;
+    background-color: rgb(21, 21, 93);
+    color: cornsilk;
+    font-family: Tahoma;
+}
+
+h1, p {
+    margin: 1em auto;
+    text-align: center;
+}
+
+form {
+    width: 60vw;
+    margin: 0 auto;
+    padding-bottom: 2em;
+  }
+
+fieldset {
+    border: none;
+    padding: 2rem 0;
+    border-bottom: 3px solid rgb(52, 116, 90)
+}
+
+input, textarea {
+    width: 100%;
+    margin: 10px 0 0 0;
+    background-color: #0a0a23;
+    border: 1px solid #0a0a23; 
+    min-height: 2em;
+    color: cornsilk;
+}
+
+
+.inline {
+    width: unset;
+    margin: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
+fieldset:last-of-type {
+    border-bottom: none;
+}
+
+label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+input[type="submit"] {
+    display:block;
+    align-items: center;
+    width:40%;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    background-color: #3b3b4f;
+    border-color: white;
+}
