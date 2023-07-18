@@ -12,12 +12,15 @@ def handle_form_submission():
     A = request.form.get('constraint-matrix-A')
     b = request.form.get('constraint-vector-b')
     cT = request.form.get('objective-vector-cT')
+    z = request.form.get('objective-constant-z')
     
-    result = True
-    
+    result = False
+    if A == "1":
+        result = True
+        
     # Return a response
     return render_template('lp-solver.html', result=result)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)
