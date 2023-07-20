@@ -32,11 +32,19 @@ def solve_linear_program():
     b = convert_str_to_array(form_data['constraint-vector-b'])
     cT = convert_str_to_array(form_data['objective-vector-cT'])
     z = convert_str_to_array(form_data['objective-constant-z'])
+    z = np.array([z])
+    B = convert_basis_to_list(form_data['starting-basis'])
+    
+    phase_one_info = form_data['show-phase-one-detail'] == 'True'
+    canonical = form_data['show-canonical'] == 'True'
    
     output = io.StringIO()
     sys.stdout = output
-    
-    print(f"form_data: {form_data}")
+    try:  
+        simplex(A, cT, b, z_hat = z, B=B, tolerance=1e-6, info=phase_one_info, canonical=canonical, max_epoch=10)
+    except Exception as e:
+        print("Error:")
+        print(e)
     
     captured_output = output.getvalue()
     sys.stdout = sys.__stdout__

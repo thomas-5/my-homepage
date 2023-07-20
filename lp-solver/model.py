@@ -98,11 +98,10 @@ def phase_two(A, cT, b, B, z_hat = np.array([0.]), tolerance = 1e-6, info = Fals
   for i in range(len(cT)):
     if i not in B:
       opt_sol.insert(i,0)
-  if epoch != 0:
-    if info: print("--------------------------- END ------------------------------")
-    if info: print(f"Optimal value: {z_hat[0]}")
-    if info: print(f"Optimal solution: x = {opt_sol}T")
-    if info: print(f"Certificate of optimality: y = {mask_to_0(np.linalg.inv(np.transpose(oA[:,B])),tolerance)@np.transpose(ocT)[B]}T")
+  if info: print("--------------------------- END ------------------------------")
+  if info: print(f"Optimal value: {z_hat[0]}")
+  if info: print(f"Optimal solution: x = {opt_sol}T")
+  if info: print(f"Certificate of optimality: y = {mask_to_0(np.linalg.inv(np.transpose(oA[:,B])),tolerance)@np.transpose(ocT)[B]}T")
   return opt_sol
 
 def phase_one(A, b, info):
@@ -125,13 +124,15 @@ def phase_one(A, b, info):
       print(f"Certificate of infeasibility: {auxiliary_cT[B] @ np.linalg.inv(auxiliary_A[:,B])}T")
       print("--------------------------- END OF PHASE 1. ------------------------------")
       return None
-  print(f"This LP is feasible, one feasible solution: {opt_sol}")
+  print(f"This LP is feasible, one feasible solution for the auxiliary LP: {opt_sol}")
   print("--------------------------- END OF PHASE 1. ------------------------------")
-  print("--------------------------- PHASE 2. ------------------------------")
+  print("--------------------------- Simplex (PHASE 2.) ------------------------------")
   return B
 
-def simplex(A, cT, b, z_hat = np.array([0.]), tolerance=1e-6, info=False, canonical=False, max_epoch=10):
-  B = phase_one(A, b, info=info)
-  if B is not None:
+def simplex(A, cT, b, z_hat = np.array([0.]), B = None, tolerance=1e-6, info=False, canonical=False, max_epoch=10):
+  if info:
+    B = phase_one(A, b, info=info)
+    if B is not None:
+      phase_two(A, cT, b, B, z_hat=z_hat, tolerance=tolerance, info=True, canonical=canonical, max_epoch=max_epoch)
+  else:
     phase_two(A, cT, b, B, z_hat=z_hat, tolerance=tolerance, info=True, canonical=canonical, max_epoch=max_epoch)
-  return
